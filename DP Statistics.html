@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reducing Student Dropout Rates</title>
+    <!-- Fix: Use proper filename without spaces -->
+    <link rel="stylesheet" href="DP Statistics.css">
+    <!-- Add Chart.js with specific version for stability -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#pie-chart-section">Pie Chart</a></li>
+                <li><a href="#bar-graph-section">Bar Graph</a></li>
+                <li><a href="#data-table-section">Data Table</a></li>
+            </ul>
+        </nav>
+        <h1>Reducing Student Dropout Rates</h1>
+    </header>
+    <main>
+        <!-- Fix: Add unique section IDs -->
+        <section id="pie-chart-section">
+            <h2>Pie Chart: Dropout Rates in India</h2>
+            <div class="chart-container">
+                <canvas id="pie-chart-canvas"></canvas>
+            </div>
+            <button id="flip-pie">Flip Pie Chart</button>
+        </section>
+        
+        <section id="bar-graph-section">
+            <h2>Bar Graph: Dropout Rates in India</h2>
+            <div class="chart-container">
+                <canvas id="bar-graph-canvas"></canvas>
+            </div>
+            <button id="flip-bar">Flip Bar Graph</button>
+        </section>
+        
+        <!-- Fix: Change section ID to avoid duplicate IDs -->
+        <section id="data-table-section">
+            <h2>Data Table: Dropout Rates in India</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>State</th>
+                            <th>Dropout Rate (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="data-table-body">
+                        <!-- Table content will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; <span id="current-year">2024</span> Reducing Student Dropout Rates</p>
+    </footer>
+    <!-- Fix: Use proper filename without spaces -->
+    <script src="DP Statistics.js"></script>
+</body>
+</html>

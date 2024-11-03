@@ -1,0 +1,528 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Future Phoenix - Dropout Recovery Network</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- External Dependencies -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #ec4899;
+            --accent-color: #8b5cf6;
+            --background-dark: #1e1b4b;
+            --text-light: #f3f4f6;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-dark);
+            color: var(--text-light);
+        }
+
+        .gradient-bg {
+            background: linear-gradient(
+                135deg,
+                var(--primary-color),
+                var(--secondary-color),
+                var(--accent-color)
+            );
+            background-size: 200% 200%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .navbar {
+            background: rgba(30, 27, 75, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            transition: width 0.3s ease;
+            width: 200px;
+        }
+
+        .search-input:focus {
+            width: 300px;
+        }
+
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(
+                to right,
+                var(--secondary-color),
+                var(--primary-color)
+            );
+            z-index: 1000;
+        }
+
+        /* Chatbot specific styles */
+        .chatbot-button {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+
+        .chatbot-window {
+            position: fixed;
+            bottom: 5rem;
+            right: 2rem;
+            width: 24rem;
+            height: 32rem;
+            z-index: 1000;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <nav class="navbar fixed w-full z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h2 class="text-2xl font-bold gradient-text animate__animated animate__fadeIn">
+                        Future Phoenix
+                    </h2>
+                </div>
+
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">HOME</a>
+                        <a href="#features" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">FEATURES</a>
+                        <a href="#about" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">ABOUT</a>
+                        <a href="#contact" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">CONTACT</a>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <div class="search-container">
+                        <input type="search" id="searchInput" 
+                               class="search-input px-4 py-2 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-secondary"
+                               placeholder="Search...">
+                        <div id="searchResults" class="absolute w-full mt-2 bg-white rounded-lg shadow-lg hidden"></div>
+                    </div>
+                    
+                    <button id="themeToggle" class="theme-toggle">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="relative min-h-screen pt-16">
+        <section id="home" class="min-h-screen flex items-center">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+                <div class="text-center animate__animated animate__fadeIn">
+                    <h1 class="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl">
+                        <span class="block">WHAT WE LEARN WITH PLEASURE</span>
+                        <span class="block text-pink-500">WE NEVER FORGET</span>
+                    </h1>
+                    
+                    <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="feature-card p-8 animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+                            <h3 class="text-xl font-bold mb-4">Track Progress</h3>
+                            <p class="text-gray-300">Monitor student progress and identify early warning signs.</p>
+                        </div>
+                        
+                        <div class="feature-card p-8 animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
+                            <h3 class="text-xl font-bold mb-4">Financial Aid</h3>
+                            <p class="text-gray-300">Connect students with essential financial resources.</p>
+                        </div>
+                        
+                        <div class="feature-card p-8 animate__animated animate__fadeInUp" style="animation-delay: 0.6s">
+                            <h3 class="text-xl font-bold mb-4">Support Network</h3>
+                            <p class="text-gray-300">Build a community of educators and mentors.</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-16 flex justify-center space-x-6">
+                        <a href="#" class="pulse bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-full font-medium transition duration-300">
+                            Get Started
+                        </a>
+                        <a href="#" class="border-2 border-pink-500 text-white px-8 py-3 rounded-full font-medium hover:bg-pink-500 transition duration-300">
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chatbot root container -->
+        <div id="chatbot-root"></div>
+    </main>
+
+    <div class="scroll-indicator">
+        <div class="flex flex-col items-center space-y-2">
+            <div class="w-2 h-2 rounded-full bg-pink-500"></div>
+            <div class="w-2 h-2 rounded-full bg-gray-400"></div>
+            <div class="w-2 h-2 rounded-full bg-gray-400"></div>
+        </div>
+    </div>
+
+    <!-- Chatbot Component -->
+    <script type="text/babel">
+        const { useState } = React;
+
+        // Simple SVG icons component
+        const Icons = {
+            MessageCircle: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
+                     stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                </svg>
+            ),
+            X: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
+                     stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            ),
+            Send: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
+                     stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            ),
+            Minimize: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
+                     stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="4 14 10 14 10 20"></polyline>
+                    <polyline points="20 10 14 10 14 4"></polyline>
+                    <line x1="14" y1="10" x2="21" y2="3"></line>
+                    <line x1="3" y1="21" x2="10" y2="14"></line>
+                </svg>
+            )
+        };
+
+        const Chatbot = () => {
+            const [isOpen, setIsOpen] = useState(false);
+            const [messages, setMessages] = useState([
+                {
+                    type: 'bot',
+                    content: "Hello! I'm here to help you navigate Future Phoenix. What would you like to know more about?",
+                    options: [
+                        "Student Resources",
+                        "Financial Aid",
+                        "Progress Tracking",
+                        "Support Network"
+                    ]
+                }
+            ]);
+            const [userInput, setUserInput] = useState('');
+            const [isTyping, setIsTyping] = useState(false);
+
+            const botResponses = {
+                "Student Resources": {
+                    content: "Great! Our student resources include:",
+                    options: ["Online Learning Materials", "Study Groups", "Tutoring Services", "Academic Planning"]
+                },
+                "Financial Aid": {
+                    content: "We offer various financial aid options:",
+                    options: ["Scholarships", "Grants", "Payment Plans", "Financial Counseling"]
+                },
+                "Progress Tracking": {
+                    content: "Let me help you track your progress:",
+                    options: ["View Current Progress", "Set Goals", "Schedule Check-in", "Request Report"]
+                },
+                "Support Network": {
+content: "Our support network includes:",
+                    options: ["Meet Mentors", "Join Community", "Contact Counselors", "Peer Support"]
+                }
+            };
+
+            const handleOptionClick = (option) => {
+                setMessages(prev => [...prev, { type: 'user', content: option }]);
+                setIsTyping(true);
+                
+                setTimeout(() => {
+                    setIsTyping(false);
+                    const response = botResponses[option];
+                    if (response) {
+                        setMessages(prev => [...prev, {
+                            type: 'bot',
+                            content: response.content,
+                            options: response.options
+                        }]);
+                    } else {
+                        setMessages(prev => [...prev, {
+                            type: 'bot',
+                            content: `Thank you for your interest in ${option}. A member of our team will contact you shortly with more information.`,
+                            options: ["Return to Main Menu", "End Chat"]
+                        }]);
+                    }
+                }, 1000);
+            };
+
+            const handleSendMessage = () => {
+                if (!userInput.trim()) return;
+                
+                setMessages(prev => [...prev, { type: 'user', content: userInput }]);
+                setUserInput('');
+                
+                setIsTyping(true);
+                setTimeout(() => {
+                    setIsTyping(false);
+                    setMessages(prev => [...prev, {
+                        type: 'bot',
+                        content: "I understand you have a specific question. Let me help you navigate through our main categories:",
+                        options: ["Student Resources", "Financial Aid", "Progress Tracking", "Support Network"]
+                    }]);
+                }, 1000);
+            };
+
+            return (
+                <div className="fixed bottom-6 right-6 z-50">
+                    {/* Chat Button */}
+                    {!isOpen && (
+                        <button
+                            onClick={() => setIsOpen(true)}
+                            className="bg-pink-500 hover:bg-pink-600 text-white rounded-full p-4 shadow-lg transition-all duration-300 animate-bounce"
+                        >
+                            <Icons.MessageCircle />
+                        </button>
+                    )}
+
+                    {/* Chat Window */}
+                    {isOpen && (
+                        <div className="bg-white rounded-lg shadow-xl w-96 h-[32rem] flex flex-col overflow-hidden">
+                            {/* Header */}
+                            <div className="bg-pink-500 p-4 text-white flex justify-between items-center">
+                                <h3 className="font-semibold">Future Phoenix Assistant</h3>
+                                <div className="flex gap-2">
+                                    <button onClick={() => setIsOpen(false)} className="hover:bg-pink-600 p-1 rounded">
+                                        <Icons.Minimize />
+                                    </button>
+                                    <button 
+                                        onClick={() => {
+                                            setIsOpen(false);
+                                            setMessages([messages[0]]);
+                                        }} 
+                                        className="hover:bg-pink-600 p-1 rounded"
+                                    >
+                                        <Icons.X />
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Messages */}
+                            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                                {messages.map((message, index) => (
+                                    <div key={index} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
+                                        <div className={`rounded-lg p-3 max-w-[80%] ${
+                                            message.type === 'user' 
+                                                ? 'bg-pink-500 text-white' 
+                                                : 'bg-gray-100 text-gray-800'
+                                        }`}>
+                                            <p>{message.content}</p>
+                                            {message.options && (
+                                                <div className="mt-2 space-y-2">
+                                                    {message.options.map((option, optIndex) => (
+                                                        <button
+                                                            key={optIndex}
+                                                            onClick={() => handleOptionClick(option)}
+                                                            className="block w-full text-left px-3 py-2 rounded bg-white hover:bg-gray-50 text-gray-800 text-sm transition-colors duration-200"
+                                                        >
+                                                            {option}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+                                {isTyping && (
+                                    <div className="flex justify-start">
+                                        <div className="bg-gray-100 rounded-lg p-3">
+                                            <div className="flex space-x-2">
+                                                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
+                                                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                                                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Input Area */}
+                            <div className="border-t p-4 flex gap-2">
+                                <input
+                                    type="text"
+                                    value={userInput}
+                                    onChange={(e) => setUserInput(e.target.value)}
+                                    onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                                    placeholder="Type your message..."
+                                    className="flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                                />
+                                <button
+                                    onClick={handleSendMessage}
+                                    className="bg-pink-500 hover:bg-pink-600 text-white rounded-lg px-4 py-2 transition-colors duration-200"
+                                >
+                                    <Icons.Send />
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        // Render the Chatbot
+        const root = ReactDOM.createRoot(document.getElementById('chatbot-root'));
+        root.render(<Chatbot />);
+    </script>
+
+    <!-- Your existing scripts -->
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        let isDark = true;
+
+        themeToggle.addEventListener('click', () => {
+            isDark = !isDark;
+            document.body.style.backgroundColor = isDark ? '#1e1b4b' : '#f3f4f6';
+            document.body.style.color = isDark ? '#f3f4f6' : '#1e1b4b';
+        });
+
+        // Scroll Progress
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("progressBar").style.width = scrolled + "%";
+        };
+
+        // Search Functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        
+        const searchData = [
+            { title: 'Student Resources', url: '#resources', description: 'Access learning materials and tools' },
+            { title: 'Financial Aid', url: '#aid', description: 'Find scholarships and financial support' },
+            { title: 'Counseling', url: '#counseling', description: 'Get academic and personal guidance' },
+            { title: 'Tutoring', url: '#tutoring', description: 'Connect with expert tutors' }
+        ];
+
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            
+            if (term.length < 2) {
+                searchResults.classList.add('hidden');
+                return;
+            }
+
+            const matches = searchData.filter(item => 
+                item.title.toLowerCase().includes(term) || 
+                item.description.toLowerCase().includes(term)
+            );
+
+            if (matches.length > 0) {
+                searchResults.innerHTML = matches
+                    .map(item => `
+                        <a href="${item.url}" class="block p-4 hover:bg-gray-100">
+                            <div class="font-medium text-gray-900">${item.title}</div>
+                            <div class="text-sm text-gray-600">${item.description}</div>
+                        </a>
+                    `)
+                    .join('');
+                searchResults.classList.remove('hidden');
+            } else {
+                searchResults.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
