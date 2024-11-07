@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Class Meeting</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            width: 350px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-size: 0.9em;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #1e90ff;
+            outline: none;
+        }
+
+        .join-button {
+            background-color: #1e90ff;
+            color: #e5ebe6;
+            padding: 12px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .join-button:hover {
+            background-color: #1c86e0;
+        }
+
+        .join-button:active {
+            background-color: #1565c0;
+        }
+
+        .join-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .info-text {
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Join Virtual Class</h1>
+        <p class="info-text">Enter your Zoom meeting link below to join the class</p>
+        <div class="form-group">
+            <label for="zoomLink">Zoom Meeting Link</label>
+            <input type="url" id="zoomLink" placeholder="https://zoom.us/j/yourmeetingid" required>
+        </div>
+        <button class="join-button" onclick="joinMeeting()" id="joinButton" disabled>Join Meeting</button>
+    </div>
+
+   
+
+</body>
+</html>

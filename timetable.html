@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student's Timetable Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f5;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .timetable {
+            margin-top: 20px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .timetable th, .timetable td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        .timetable th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Student Timetable Generator</h1>
+    <div class="container">
+        <div class="form-group">
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" placeholder="Enter subject (e.g: Mathematics)">
+        </div>
+        <div class="form-group">
+            <label for="day">Day:</label>
+            <input type="text" id="day" placeholder="Enter day (e.g: Monday)">
+        </div>
+        <div class="form-group">
+            <label for="time">Time:</label>
+            <input type="text" id="time" placeholder="Enter time (e.g:-9:00 AM - 10:30 AM)">
+        </div>
+        <button class="button" onclick="addTimetableEntry()">Add to Timetable</button>
+
+        <table class="timetable" id="timetable">
+            <tr>
+                <th>Day</th>
+                <th>Time</th>
+                <th>Subject</th>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function addTimetableEntry() {
+            
+            const subject = document.getElementById("subject").value;
+            const day = document.getElementById("day").value;
+            const time = document.getElementById("time").value;
+
+            
+            const table = document.getElementById("timetable");
+            const row = table.insertRow();
+            const cell1 = row.insertCell(0);
+            const cell2 = row.insertCell(1);
+            const cell3 = row.insertCell(2);
+
+            
+            cell1.innerText = day;
+            cell2.innerText = time;
+            cell3.innerText = subject;
+
+            
+            document.getElementById("subject").value = "";
+            document.getElementById("day").value = "";
+            document.getElementById("time").value = "";
+        }
+    </script>
+
+</body>
+</html>
