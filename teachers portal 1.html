@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      overflow: hidden; /* Prevents scrolling */
+    }
+    .video-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .video-background video {
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+    }
+    .glass-effect {
+      position: relative;
+      z-index: 1; /* Ensures content is above the video */
+      background: rgba(0, 0, 0, 0.5); /* Black with some transparency */
+      border-radius: 10px; /* Rounded corners */
+      backdrop-filter: blur(10px); /* Blur effect for the glassmorphism */
+      color: white; /* Text color */
+      padding: 20px; /* Internal padding */
+      width: 80%; /* Set width */
+      max-width: 1500px; /* Max width for larger screens */
+      height: auto; /* Change to auto to fit content */
+      margin: auto; /* Center the glass effect */
+      margin-top: 50px; /* Adjusted top margin for spacing */
+    }
+    .navbar-brand {
+      color: white; /* Text color for navbar brand */
+      font-size: 24px; /* Increase font size */
+    }
+    .navbar-inverse {
+      background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+    }
+    .form-control {
+      max-width: 300px; /* Set a maximum width for inputs */
+      margin: auto; /* Center inputs */
+    }
+    .btn-submit {
+      display: block; /* Make button block-level */
+      width: 200px; /* Set a fixed width for the button */
+      margin: 20px auto; /* Center the button with margin */
+    }
+    /* Center the labels */
+    .form-group label {
+      text-align: center; /* Center the text in labels */
+      display: block; /* Make labels block-level to take full width */
+    }
+  </style>
+</head>
+<body>
+
+<div class="video-background">
+  <video autoplay loop muted>
+    <source src="C:\Users\91994\Desktop\SEM 3 PROJECT\5993799-uhd_4096_2160_25fps.mp4" type="video/mp4"> 
+  </video>
+</div>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarNav">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">FUTURE PHONEX</a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="nav navbar-nav">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Statistics</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Help</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container glass-effect">
+  <h2><u><center>STAFF PORTAL</center></u></h2><br><br>
+  
+  <form onsubmit="return validateForm()">
+    <div class="form-group">
+      <label for="studentName"><i>Staff Name</i></label>
+      <input type="text" class="form-control" id="studentName" placeholder="Enter Staff Name" required>
+    </div>
+    <div class="form-group">
+      <label for="rollNo"><i>Register Number:</i></label>
+      <input type="text" class="form-control" id="rollNo" placeholder="Enter Register Number" pattern="\d+" title="Please enter a valid register number (digits only)" required>
+    </div>
+    <div class="form-group">
+      <label for="dob"><i>Date of Birth:</i></label>
+      <input type="date" class="form-control" id="dob" required>
+    </div>
+    <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+  </form>
+</div>
+
+<script>
+  function validateForm() {
+    const studentName = document.getElementById('studentName').value.trim();
+    const rollNo = document.getElementById('rollNo').value.trim();
+    const dob = document.getElementById('dob').value;
+
+    // Check if studentName is empty
+    if (studentName === '') {
+      alert('Please enter a valid Staff Name.');
+      return false;
+    }
+
+    // Check if rollNo is empty or not a number
+    if (rollNo === '' || isNaN(rollNo)) {
+      alert('Please enter a valid Register Number (digits only).');
+      return false;
+    }
+
+    // Check if dob is empty
+    if (!dob) {
+      alert('Please enter a valid Date of Birth.');
+      return false;
+    }
+
+    // Optional: Additional check to ensure DOB is not in the future
+    const dobDate = new Date(dob);
+    const today = new Date();
+    if (dobDate > today) {
+      alert('Date of Birth cannot be in the future.');
+      return false;
+    }
+
+    // Redirect to the specified page upon successful validation
+    window.location.href = "file:///C:/Users/91994/Desktop/SEM%203%20PROJECT/taecher%20portal%202.html";
+    return false; // Prevent default form submission
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Connect 4</title>
+    <link rel="stylesheet" href="connect game.css">
+    <script src="connect game .js"></script>
+</head>
+<body>
+    <h1>CONNECT GAME </h1>
+    <h2 id="winner"></h2>
+    <div id="board"></div>
+</body>
+<style>
+
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+  }
+  .video-background video {
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    }
+    </style>
+<div class="video-background">
+    <video autoplay loop muted>
+      <source src="C:\Users\91994\Desktop\SEM 3 PROJECT\11207859-uhd_3840_2160_24fps.mp4" type="video/mp4"> 
+    </video>
+  </div>
+</html>
