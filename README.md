@@ -11,9 +11,9 @@ Our project is a digitally driven initiative designed in collaboration with NGOs
 -> Empower students with tailored learning paths and academic guidance<br>
 
 # 🛠️ Tech Stack
-Frontend	Backend	Database
-HTML	PHP	MySQL
-CSS	<br>	
+Frontend : HTML, CSS<br>
+Backend	: PHP<br>
+Database : MySQL<br>	
 # 🧩 Features
 ✅ Virtual classroom with real-time communication <br>✅ Smart login system for students, parents, and teachers <br>✅ Financial aid tracking dashboard <br>✅ Personalized learning journeys <br>✅ Dropout analytics for early intervention <br>✅ Family engagement through dedicated interfaces
 <br>
