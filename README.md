@@ -1,4 +1,4 @@
-# 🌱 Project Shiksha Suraksha – Empowering Education, One Student at a Time
+# 🌱 Project Reducing Student Dropout Rates – Empowering Education, One Student at a Time
 Student retention in India remains a pressing challenge, especially among underprivileged communities. With nearly 17% of students dropping out—a number even higher in rural regions—the need for a solution is urgent and real.
 <br>
 # 💡 About the Project
